@@ -11,7 +11,7 @@ public class CommentBox extends Rectangle {
     @Override
     public void draw(GraphicsContext gc) {
         gc.setLineDashes(10);
-        gc.strokeRect(x, y, width, height);
+        gc.strokeRoundRect(x, y, width, height, 30.0, 20.0);
         gc.fillText(super.getName(), x + width, y);
     }
 }

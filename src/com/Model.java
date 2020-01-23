@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
 
@@ -19,17 +21,20 @@ public class Model {
 
     private IDataObserver observer;
     private Canvas canvas;
+    private boolean firstTime = true;
 
     private List<Shape> shapes = new ArrayList<>();
 
+    private Map<String, String> arguments = new HashMap<>();
+
     public void setWidth(double width) {
         this.width = (int) width;
-        canvas = null; // window size changed ... invalidate canvas
+        canvas = null;
     }
 
     public void setHeight(double height) {
         this.height = (int) height;
-        canvas = null; // window size changed ... invalidate canvas
+        canvas = null;
     }
 
     public void addListener(IDataObserver observer) {
@@ -99,9 +104,22 @@ public class Model {
         if (shape instanceof Rectangle) {
             Rectangle rect = (Rectangle) shape;
             rect.setName(text);
+            if (firstTime) {
+                arguments.put("state_1", text);
+                firstTime = false;
+            } else {
+                arguments.put("state_2", text);
+            }
         } else if (shape instanceof Line) {
-            Line line = (Line) shape;
-            line.setName(text);
+            if (!firstTime) {
+                Line line = (Line) shape;
+                line.setName(text);
+                String[] args = text.split("/");
+                arguments.put("condition", args[0]);
+                StateMachineTemplate template = new StateMachineTemplate();
+                arguments.put("operation", args[1]);
+                System.out.println(template.generate(arguments));
+            }
         }
     }
 

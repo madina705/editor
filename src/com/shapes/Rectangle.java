@@ -21,7 +21,7 @@ public class Rectangle extends java.awt.Rectangle implements Shape {
     @Override
     public void draw(GraphicsContext gc) {
         gc.setLineDashes(null);
-        gc.strokeRect(x, y, width, height);
+        gc.strokeRoundRect(x, y, width, height, 30.0, 20.0);
         gc.fillText(name, x + width, y);
     }
 

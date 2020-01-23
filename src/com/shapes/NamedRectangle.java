@@ -28,7 +28,7 @@ public class NamedRectangle extends Rectangle {
         else{
             gc.setLineDashes(null);
         }
-        gc.strokeRect(x, y, width, height);
+        gc.strokeRoundRect(x, y, width, height, 30.0, 20.0);
         compartment.draw(gc);
         gc.fillText(super.getName(), x + width, y);
     }
